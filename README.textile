@@ -1,0 +1,80 @@
+h1. Jekyll Quick Man
+
+This Jekyll plugin generates links to man pages on the internet and automatically fills the anchor title with the man pages' description.
+
+For example, for the "ruby(1)(Manpage zum Befehl 'ruby - Interpreted object-oriented scripting language')":http://manpages.ubuntu.com/manpages/ruby.1 command, the following HTML would be rendered:
+
+pre. <a title="Manpage zum Befehl 'ruby - Interpreted object-oriented scripting language'"
+href="http://manpages.ubuntu.com/manpages/ruby.1">ruby(1)</a>
+
+
+
+h2. Installation
+
+Set the constant @PATH_TO_JEKYLL_SITE@ correctly and run these commands accordingly:
+
+pre. cd ${PATH_TO_JEKYLL_SITE}
+echo "gem 'jekyll_quick_man'" >> Gemfile
+bundle
+echo "require 'jekyll_quick_man'" >> _plugins/ext.rb
+
+
+*Alternatively* you may accomplish the same without @echo@ and @bundle@:
+
+# Install the plugin by running @gem install jekyll_quick_man@
+# Add the line @require 'jekyll_quick_man'@ to *_plugins/ext.rb*
+
+
+
+h2. Usage
+
+pre.. # Basic usage
+{% man 1 ruby %}
+
+# Requesting a specific target man page
+{% man 1 ruby FreeBSD %}
+
+# Requesting a specific target man page
+{% man 1 ruby Ubuntu %}
+
+
+
+h2. How it works
+
+The plugin relies primarily on the systems' "manpath(1)(determine search path for manual pages)":http://manpages.ubuntu.com/manpages/manpath.1 and "whatis(1)(display manual page descriptions)":http://manpages.ubuntu.com/manpages/whatis.1 commands in order to find the man page discriptions.
+
+On systems that are missing these commands, or if the commands fail to return usable values, **Jekyll Quick Man** will search the descriptions in **_config.yml**.
+
+In order for this to work, the file must contain @man@ data with the man page names specified with or without their according section:
+
+pre. # Example without section
+man:
+  ruby: Interpreted object-oriented scripting language
+
+# Example with section
+man:
+  ruby:
+    1: Interpreted object-oriented scripting language
+
+If **Jekyll Quick Man** is unable to find an according description in the config file, the anchor will simply be rendered without it.
+
+
+
+h2. Notes
+
+* Typically, the systems locale determines the language of the description in the @whatis@ output.
+* Currently additional text in the title is rendered in German.
+* **Jekyll Quick Man** uses the same tag as **jekyll-beastiepress**. However, it is largely compatible with it's _syntax_ and may therefore be used as a replacement/alternative.
+
+
+
+h2. Possible Improvements
+
+* Support distinction between BSD and Linux distributions in the YAML (eg @man.freebsd.ruby.1@, @man.arch.ruby.1@ or @man.bsd.ruby.1@, @man.linux.ruby.1@)
+* Use @whatis@ to determine the section number if user fails to provide it.
+
+
+
+h2. License
+
+Jekyll Image Embed is released under the "MIT License":http://www.opensource.org/licenses/MIT.
