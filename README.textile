@@ -47,11 +47,11 @@ On systems that are missing these commands, or if the commands fail to return us
 
 In order for this to work, the file must contain @man@ data along with the man page name. A section may be specified optionally.
 
-pre.. # Example without section
+pre. # Example without section
 man:
   ruby: Interpreted object-oriented scripting language
 
-# Example with section
+pre. # Example with section
 man:
   ruby:
     1: Interpreted object-oriented scripting language
@@ -72,6 +72,7 @@ h2. Possible Improvements
 
 * Support distinction between BSD and Linux distributions in the YAML (eg @man.freebsd.ruby.1@, @man.arch.ruby.1@ or @man.bsd.ruby.1@, @man.linux.ruby.1@)
 * Use @whatis@ to determine the section number if user fails to provide it.
+* Reduce the title text to distribution, man page name, section and description.
 
 
 
