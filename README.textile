@@ -45,9 +45,9 @@ The plugin relies primarily on the systems' "manpath(1)(determine search path fo
 
 On systems that are missing these commands, or if the commands fail to return usable values, **Jekyll Quick Man** will search the descriptions in **_config.yml**.
 
-In order for this to work, the file must contain @man@ data with the man page names specified with or without their according section:
+In order for this to work, the file must contain @man@ data along with the man page name. A section may be specified optionally.
 
-pre. # Example without section
+pre.. # Example without section
 man:
   ruby: Interpreted object-oriented scripting language
 
@@ -56,15 +56,15 @@ man:
   ruby:
     1: Interpreted object-oriented scripting language
 
-If **Jekyll Quick Man** is unable to find an according description in the config file, the anchor will simply be rendered without it.
+If **Jekyll Quick Man** is unable to find a description, the anchor will simply be rendered without one.
 
 
 
 h2. Notes
 
-* Typically, the systems locale determines the language of the description in the @whatis@ output.
-* Currently additional text in the title is rendered in German.
-* **Jekyll Quick Man** uses the same tag as **jekyll-beastiepress**. However, it is largely compatible with it's _syntax_ and may therefore be used as a replacement/alternative.
+* Typically, the system locale determines the language of the description provided by @whatis@.
+* Currently, additional text in the title is rendered in German.
+* **Jekyll Quick Man** was written as a replacement for the according tag in _jekyll-beastiepress_. Therefore the tag names ("man") clash, but as the _syntax_ is largely compatible, a transation requires little effort unless other tags of _jekyll-beastiepress_ are requiered.
 
 
 
@@ -77,4 +77,4 @@ h2. Possible Improvements
 
 h2. License
 
-Jekyll Image Embed is released under the "MIT License":http://www.opensource.org/licenses/MIT.
+Jekyll Quick Man is released under the "MIT License":http://www.opensource.org/licenses/MIT.
