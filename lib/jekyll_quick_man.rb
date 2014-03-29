@@ -18,6 +18,7 @@ module Jekyll
       
       def generate_anchor(man)
         description = determine_description(man)
+        p "WARNING: None of the checked sources contained information about '#{@page}'" if description.empty?
         title = "#{@provider} Manpage zu#{determine_type} '#{@page}#{description}'"
         
         href = determine_url
@@ -31,12 +32,14 @@ module Jekyll
 				# locale = "--locale=de"
 				thats_it = `whatis #{man_path} #{section} --long --systems=#{@provider},man #{@page} 2> /dev/null`
 
-				if thats_it
+        description = nil
+
+				if thats_it != ''
 					description = " - #{thats_it.split(/\) +-+ +/).last}"
 					description.gsub!(/\n\Z/,'')
 				end
 
-				description || nil
+				description
 			end
       
       def determine_description_via_config(man)
@@ -51,26 +54,14 @@ module Jekyll
 							# support for yaml paths like man.ssh
 							description = " - #{man_page}"
 						end
-					else
-					  p "WARNING: Missing man page for '#{@page}'. Links will be generated without man descriptions."
 					end
-
-				else
-					p 'WARNING: Zero man pages defined in config file. Links will be generated without man descriptions.'
 				end
         
         description || ''
 			end
 
       def determine_description(man)
-			  description = determine_description_via_whatis
-
-				unless description
-					p "whatis failed to find a descripton for #{@page}. Trying config file as a fall back ..."
-					description = determine_description_via_config(man)
-				end
-
-				description || ''
+			  determine_description_via_whatis || determine_description_via_config(man) || ''
 			end
 
 
